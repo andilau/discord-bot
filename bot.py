@@ -37,7 +37,15 @@ def health():
 
 @app.route('/')
 def welcome():
-    return "<html><body><h1>Hello World!</h1></body></html>", 200
+    return """
+    <html>
+        <head><title>My Bot</title></head>
+        <body>
+            <h1>🤖 My Discord Bot is Running!</h1>
+            <p>Health: <a href="/health">/health</a></p>
+        </body>
+    </html>
+    """
 
 def run_flask():
     port = int(os.environ.get("PORT", 5000))
