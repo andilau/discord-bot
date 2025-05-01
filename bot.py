@@ -1,6 +1,8 @@
-import os
 import discord
 from discord.ext import commands
+import threading
+from flask import Flask
+import os
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
@@ -26,4 +28,18 @@ async def user(ctx, member: discord.Member = None):
     member = member or ctx.author
     await ctx.send(f'👤 Name: {member.name}\n🆔 ID: {member.id}')
 
-bot.run(TOKEN)
+# Flask setup
+app = Flask(__name__)
+
+@app.route('/health')
+def health():
+    return "OK", 200
+
+def run_flask():
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
+# Start Flask in a thread before running bot
+if __name__ == "__main__":
+    threading.Thread(target=run_flask).start()
+    bot.run(TOKEN)
