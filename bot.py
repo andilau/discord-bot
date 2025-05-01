@@ -17,4 +17,13 @@ async def on_ready():
 async def ping(ctx):
     await ctx.send('🏓 Pong!')
 
+@bot.command()
+async def say(ctx, *, message):
+    await ctx.send(message)
+
+@bot.command()
+async def user(ctx, member: discord.Member = None):
+    member = member or ctx.author
+    await ctx.send(f'👤 Name: {member.name}\n🆔 ID: {member.id}')
+
 bot.run(TOKEN)
